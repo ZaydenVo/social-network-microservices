@@ -7,16 +7,20 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import com.zayden.identity_service.dto.request.AuthenticationResquest;
 import com.zayden.identity_service.dto.request.IntrospectRequest;
+import com.zayden.identity_service.dto.request.LogoutRequest;
 import com.zayden.identity_service.dto.response.AuthenticationResponse;
 import com.zayden.identity_service.dto.response.IntrospectResponse;
+import com.zayden.identity_service.entity.InvalidatedToken;
 import com.zayden.identity_service.entity.User;
 import com.zayden.identity_service.exception.AppException;
 import com.zayden.identity_service.exception.ErrorCode;
+import com.zayden.identity_service.repository.InvalidatedTokenRepository;
 import com.zayden.identity_service.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,12 +32,14 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationService {
     UserRepository userRepository;
     PasswordEncoder passwordEncoder;
+    InvalidatedTokenRepository invalidatedTokenRepository;
 
     @NonFinal
     @Value("${jwt.signerKey}")
@@ -65,6 +71,8 @@ public class AuthenticationService {
         boolean isValid = true;
         try {
             jwt = verifyToken(request.getToken());
+            if (invalidatedTokenRepository.existsById(jwt.getJWTClaimsSet().getJWTID()))
+                isValid = false;
         } catch (AppException e) {
             isValid = false;
         }
@@ -72,6 +80,20 @@ public class AuthenticationService {
                 .userId(Objects.nonNull(jwt) ? jwt.getJWTClaimsSet().getSubject() : null)
                 .valid(isValid)
                 .build();
+    }
+
+    public void logout(LogoutRequest request) throws ParseException, JOSEException {
+        try {
+            var signToken = verifyToken(request.getToken());
+
+            InvalidatedToken invalidatedToken = InvalidatedToken.builder()
+                    .id(signToken.getJWTClaimsSet().getJWTID())
+                    .expiryTime(signToken.getJWTClaimsSet().getExpirationTime())
+                    .build();
+            invalidatedTokenRepository.save(invalidatedToken);
+        } catch (AppException e) {
+            log.info("Token already expired!");
+        }
     }
 
     private String generateToken(User user) {
