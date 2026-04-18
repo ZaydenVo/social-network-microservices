@@ -5,6 +5,7 @@ import com.zayden.identity_service.dto.ApiResponse;
 import com.zayden.identity_service.dto.request.AuthenticationResquest;
 import com.zayden.identity_service.dto.request.IntrospectRequest;
 import com.zayden.identity_service.dto.request.LogoutRequest;
+import com.zayden.identity_service.dto.request.RefreshTokenRequest;
 import com.zayden.identity_service.dto.response.AuthenticationResponse;
 import com.zayden.identity_service.dto.response.IntrospectResponse;
 import com.zayden.identity_service.service.AuthenticationService;
@@ -44,6 +45,13 @@ public class AuthenticationController {
         authenticationService.logout(request);
         return ApiResponse.<String>builder()
                 .result("You have been logged out successfully!")
+                .build();
+    }
+
+    @PostMapping("/refresh")
+    ApiResponse<AuthenticationResponse> refreshToken(@RequestBody RefreshTokenRequest request) throws ParseException, JOSEException {
+        return ApiResponse.<AuthenticationResponse>builder()
+                .result(authenticationService.refreshToken(request))
                 .build();
     }
 }
