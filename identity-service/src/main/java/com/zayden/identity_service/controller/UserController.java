@@ -8,7 +8,6 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.apache.kafka.shaded.com.google.protobuf.Api;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
