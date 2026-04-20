@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -26,4 +28,7 @@ public class User {
 
     @Column(name = "email_verified", nullable = false, columnDefinition = "boolean default false")
     boolean emailVerified;
+
+    @ManyToMany
+    Set<Role> roles;
 }
