@@ -111,8 +111,8 @@ public class AuthenticationService {
                 .build();
         invalidatedTokenRepository.save(invalidatedToken);
 
-        var userId = signToken.getJWTClaimsSet().getSubject();
-        User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.UNAUTHENTICATED));
+        var username = signToken.getJWTClaimsSet().getSubject();
+        User user = userRepository.findById(username).orElseThrow(() -> new AppException(ErrorCode.UNAUTHENTICATED));
 
         return AuthenticationResponse.builder()
                 .authenticated(true)
@@ -124,7 +124,7 @@ public class AuthenticationService {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
 
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .subject(user.getUserId())
+                .subject(user.getUsername())
                 .issuer("zayden.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(
