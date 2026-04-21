@@ -1,5 +1,6 @@
 package com.zayden.identity_service.dto.request;
 
+import com.zayden.identity_service.validator.DobConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -23,6 +24,7 @@ public class UserCreationRequest {
     String firstName;
     String lastName;
 
+    @DobConstraint(min = 18, message = "INVALID_DOB")
     LocalDate dob;
 
     @Email(message = "INVALID_EMAIL")

@@ -14,6 +14,12 @@ public enum ErrorCode {
     USER_EXISTED(1003, "User existed!", HttpStatus.BAD_REQUEST),
     USER_NOT_EXISTED(1004, "User is not existed!", HttpStatus.NOT_FOUND),
     UNAUTHENTICATED(1005, "Unauthenticated!", HttpStatus.UNAUTHORIZED),
+    INVALID_KEY(1006, "Invalid message key.", HttpStatus.BAD_REQUEST),
+    USERNAME_INVALID(1007, "Username must be at least {min} characters!", HttpStatus.BAD_REQUEST),
+    PASSWORD_INVALID(1008, "Password must be at least {min} characters!", HttpStatus.BAD_REQUEST),
+    INVALID_EMAIL(1009, "Invalid email!", HttpStatus.BAD_REQUEST),
+    EMAIL_IS_REQUIRED(1009, "Email is required!", HttpStatus.BAD_REQUEST),
+    INVALID_DOB(1010, "Your age must be at least {min}!", HttpStatus.BAD_REQUEST),
     ;
     int code;
     String message;
