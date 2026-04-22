@@ -21,3 +21,9 @@ Thumbs.db
 .mvn/
 mvnw
 mvnw.cmd
+
+.idea/httpRequests/
+http-client.private.env.json
+
+target/
+*.class

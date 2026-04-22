@@ -1,0 +1,19 @@
+### Login
+POST {{gateway_url}}{{api_prefix}}/identity/auth/token
+Content-Type: application/json
+
+{
+  "username": "zayden",
+  "password": "12345678"
+}
+
+> {%
+    client.global.set("auth_token", response.body.result.token)
+ %}
+
+### Get all Users
+GET {{gateway_url}}{{api_prefix}}/identity/users/getAll
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+###
