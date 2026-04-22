@@ -16,4 +16,9 @@ GET {{gateway_url}}{{api_prefix}}/identity/users/getAll
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 
+### Get User
+GET {{gateway_url}}{{api_prefix}}/identity/users/b43da07e-b5c9-463a-928b-d28813e135c5
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
 ###

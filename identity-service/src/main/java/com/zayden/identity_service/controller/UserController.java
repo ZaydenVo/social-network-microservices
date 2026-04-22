@@ -1,16 +1,19 @@
 package com.zayden.identity_service.controller;
 
+import java.util.List;
+
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
+
 import com.zayden.identity_service.dto.ApiResponse;
 import com.zayden.identity_service.dto.request.UserCreationRequest;
 import com.zayden.identity_service.dto.response.UserResponse;
 import com.zayden.identity_service.service.UserService;
-import jakarta.validation.Valid;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")

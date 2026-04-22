@@ -1,10 +1,8 @@
 package com.zayden.api_gateway.configuration;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zayden.api_gateway.dto.ApiResponse;
-import com.zayden.api_gateway.service.IdentityService;
-import lombok.experimental.NonFinal;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -16,10 +14,14 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
-import java.util.List;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zayden.api_gateway.dto.ApiResponse;
+import com.zayden.api_gateway.service.IdentityService;
+
+import lombok.experimental.NonFinal;
+import reactor.core.publisher.Mono;
 
 public class AuthenticationFilter implements GlobalFilter, Ordered {
     IdentityService identityService;
@@ -27,7 +29,11 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
 
     @NonFinal
     private final String[] PUBLIC_ENDPOINTS = {
-            "/identity/auth/.*", "/identity/users/registration", "/notification/email/send", "/file/media/download/.*", "/search"
+        "/identity/auth/.*",
+        "/identity/users/registration",
+        "/notification/email/send",
+        "/file/media/download/.*",
+        "/search"
     };
 
     @Value("${app.api-prefix}")
@@ -43,7 +49,8 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
 
         var token = authHeader.getFirst().replace("Bearer", "");
 
-        return identityService.introspect(token)
+        return identityService
+                .introspect(token)
                 .flatMap(response -> {
                     if (response.getResult().isValid()) return chain.filter(exchange);
                     else return unauthenticated(exchange.getResponse());
@@ -62,10 +69,8 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
     }
 
     Mono<Void> unauthenticated(ServerHttpResponse response) {
-        ApiResponse<?> apiResponse = ApiResponse.builder()
-                .code(1401)
-                .message("Unauthenticated!")
-                .build();
+        ApiResponse<?> apiResponse =
+                ApiResponse.builder().code(1401).message("Unauthenticated!").build();
 
         String body = null;
         try {

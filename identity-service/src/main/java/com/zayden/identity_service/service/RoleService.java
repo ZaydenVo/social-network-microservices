@@ -1,5 +1,10 @@
 package com.zayden.identity_service.service;
 
+import java.util.HashSet;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.zayden.identity_service.dto.request.RoleRequest;
 import com.zayden.identity_service.dto.response.RoleResponse;
 import com.zayden.identity_service.entity.Permission;
@@ -7,14 +12,10 @@ import com.zayden.identity_service.entity.Role;
 import com.zayden.identity_service.mapper.RoleMapper;
 import com.zayden.identity_service.repository.PermissionRepository;
 import com.zayden.identity_service.repository.RoleRepository;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

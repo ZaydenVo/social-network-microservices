@@ -1,29 +1,30 @@
 **/target/
 **/build/
+target/
 out/
+*.class
 
 .idea/
+.idea/httpRequests/
 *.iml
+
 .vscode/
 *.sublime-project
 *.sublime-workspace
 
-*.log
-logs/
+http-client.private.env.json
+http-requests-log.http
 
 .env
 **/application-local.yml
 **/application-dev.yml
 
-.DS_Store
-Thumbs.db
+*.log
+logs/
 
 .mvn/
 mvnw
 mvnw.cmd
 
-.idea/httpRequests/
-http-client.private.env.json
-
-target/
-*.class
+.DS_Store
+Thumbs.db

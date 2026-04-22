@@ -1,16 +1,18 @@
 package com.zayden.identity_service.exception;
 
-import com.zayden.identity_service.dto.ApiResponse;
+import java.text.ParseException;
+import java.util.Map;
+import java.util.Objects;
+
 import jakarta.validation.ConstraintViolation;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.text.ParseException;
-import java.util.Map;
-import java.util.Objects;
+import com.zayden.identity_service.dto.ApiResponse;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -62,9 +64,13 @@ public class GlobalExceptionHandler {
 
         try {
             errorCode = ErrorCode.valueOf(enumKey);
-            attributes = exception.getBindingResult()
-                    .getAllErrors().getFirst().unwrap(ConstraintViolation.class)
-                    .getConstraintDescriptor().getAttributes();
+            attributes = exception
+                    .getBindingResult()
+                    .getAllErrors()
+                    .getFirst()
+                    .unwrap(ConstraintViolation.class)
+                    .getConstraintDescriptor()
+                    .getAttributes();
         } catch (IllegalArgumentException e) {
 
         }
@@ -74,12 +80,12 @@ public class GlobalExceptionHandler {
                         .code(errorCode.getCode())
                         .message(
                                 Objects.nonNull(attributes)
-                                    ? mapAtrtibute(errorCode.getMessage(), attributes)
-                                    : errorCode.getMessage())
+                                        ? mapAtrtibute(errorCode.getMessage(), attributes)
+                                        : errorCode.getMessage())
                         .build());
     }
 
-    private String mapAtrtibute (String message, Map<String, Object> attribute) {
+    private String mapAtrtibute(String message, Map<String, Object> attribute) {
         String minValue = String.valueOf(attribute.get(MIN_ATTRIBUTE));
         return message.replace("{" + MIN_ATTRIBUTE + "}", minValue);
     }

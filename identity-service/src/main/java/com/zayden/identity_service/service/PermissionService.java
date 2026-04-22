@@ -1,16 +1,18 @@
 package com.zayden.identity_service.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.zayden.identity_service.dto.request.PermissionRequest;
 import com.zayden.identity_service.dto.response.PermissionResponse;
 import com.zayden.identity_service.entity.Permission;
 import com.zayden.identity_service.mapper.PermissionMapper;
 import com.zayden.identity_service.repository.PermissionRepository;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +28,9 @@ public class PermissionService {
     }
 
     public List<PermissionResponse> GetAllPermissions() {
-        return permissionRepository.findAll().stream().map(permissionMapper::toPermissionResponse).toList();
+        return permissionRepository.findAll().stream()
+                .map(permissionMapper::toPermissionResponse)
+                .toList();
     }
 
     public void deletePermission(String permission) {
