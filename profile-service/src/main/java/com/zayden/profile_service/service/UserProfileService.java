@@ -35,4 +35,21 @@ public class UserProfileService {
 
         return userProfileMapper.toUserProfileResponse(userProfileRepository.save(user));
     }
+
+    public UserProfileResponse getMyInfo() {
+        var userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        var user = userProfileRepository.findByUserId(userId).orElseThrow(() -> new AppException(ErrorCode.PROFILE_NOT_EXISTED));
+
+        return userProfileMapper.toUserProfileResponse(user);
+    }
+
+    public UserProfileResponse getProfileByUsername(String username) {
+        var user = userProfileRepository.findByUsername(username).orElseThrow(() -> new AppException(ErrorCode.PROFILE_NOT_EXISTED));
+        return userProfileMapper.toUserProfileResponse(user);
+    }
+
+    public UserProfileResponse getProfileByUserId(String userId) {
+        var user = userProfileRepository.findByUserId(userId).orElseThrow(() -> new AppException(ErrorCode.PROFILE_NOT_EXISTED));
+        return userProfileMapper.toUserProfileResponse(user);
+    }
 }

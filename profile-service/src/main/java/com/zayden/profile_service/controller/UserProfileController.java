@@ -7,9 +7,7 @@ import com.zayden.profile_service.service.UserProfileService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +19,20 @@ public class UserProfileController {
     ApiResponse<UserProfileResponse> updateProfile(@RequestBody ProfileUpdateRequest request) {
         return ApiResponse.<UserProfileResponse>builder()
                 .result(userProfileService.updateProfile(request))
+                .build();
+    }
+
+    @GetMapping("/users/my-info")
+    ApiResponse<UserProfileResponse> getMyInfo() {
+        return ApiResponse.<UserProfileResponse>builder()
+                .result(userProfileService.getMyInfo())
+                .build();
+    }
+
+    @GetMapping("/users/profile/{username}")
+    ApiResponse<UserProfileResponse> getProfilebyUsername(@PathVariable String username) {
+        return ApiResponse.<UserProfileResponse>builder()
+                .result(userProfileService.getProfileByUsername(username))
                 .build();
     }
 }
