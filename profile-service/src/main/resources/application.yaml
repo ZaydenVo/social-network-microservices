@@ -1,0 +1,14 @@
+server:
+  port: ${PORT:8081}
+  servlet:
+    context-path: /profile
+spring:
+  neo4j:
+    uri: ${NEO4J_URI:bolt://localhost:7687}
+    authentication:
+      username: ${NEO4J_USERNAME:neo4j}
+      password: ${NEO4J_PASSWORD:12345678}
+
+app:
+  services:
+    file: ${FILE_SERVICE_URL:http://localhost:8084}
