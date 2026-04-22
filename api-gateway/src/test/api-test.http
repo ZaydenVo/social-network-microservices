@@ -21,4 +21,16 @@ GET {{gateway_url}}{{api_prefix}}/identity/users/b43da07e-b5c9-463a-928b-d28813e
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 
+### Update Profile
+PUT {{gateway_url}}{{api_prefix}}/profile/users/update
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "firstName": "Tran Tin",
+  "lastName": "Vo",
+  "dob": "1993-09-02",
+  "city": "Ho Chi Minh"
+}
+
 ###

@@ -1,0 +1,26 @@
+package com.zayden.profile_service.controller;
+
+import com.zayden.profile_service.dto.ApiResponse;
+import com.zayden.profile_service.dto.request.ProfileUpdateRequest;
+import com.zayden.profile_service.dto.response.UserProfileResponse;
+import com.zayden.profile_service.service.UserProfileService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class UserProfileController {
+    UserProfileService userProfileService;
+
+    @PutMapping("/users/update")
+    ApiResponse<UserProfileResponse> updateProfile(@RequestBody ProfileUpdateRequest request) {
+        return ApiResponse.<UserProfileResponse>builder()
+                .result(userProfileService.updateProfile(request))
+                .build();
+    }
+}

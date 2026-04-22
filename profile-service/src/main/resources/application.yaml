@@ -12,3 +12,6 @@ spring:
 app:
   services:
     file: ${FILE_SERVICE_URL:http://localhost:8084}
+
+jwt:
+  signerKey: ${JWT_SIGNER_KEY:ksRysNJBznui5E3rQ1LQE5g+u3IR+RxJoXIF9ob7eZQeWuzsh2u2nYlrgeY5XqYD}
