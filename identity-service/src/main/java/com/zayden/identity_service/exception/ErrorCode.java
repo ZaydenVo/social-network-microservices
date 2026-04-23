@@ -21,6 +21,7 @@ public enum ErrorCode {
     INVALID_EMAIL(1009, "Invalid email!", HttpStatus.BAD_REQUEST),
     EMAIL_IS_REQUIRED(1009, "Email is required!", HttpStatus.BAD_REQUEST),
     INVALID_DOB(1010, "Your age must be at least {min}!", HttpStatus.BAD_REQUEST),
+    CANNOT_CREATE_PROFILE(1011, "Can not create profile!", HttpStatus.INTERNAL_SERVER_ERROR),
     ;
     int code;
     String message;

@@ -3,6 +3,9 @@ package com.zayden.identity_service.service;
 import java.util.HashSet;
 import java.util.List;
 
+import com.zayden.identity_service.mapper.ProfileMapper;
+import com.zayden.identity_service.repository.httpclient.ProfileClient;
+import feign.FeignException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,6 +34,8 @@ public class UserService {
     UserRepository userRepository;
     PasswordEncoder passwordEncoder;
     RoleRepository roleRepository;
+    ProfileMapper profileMapper;
+    ProfileClient profileClient;
 
     public UserResponse createUser(UserCreationRequest request) {
         User user = userMapper.toUser(request);
@@ -52,6 +57,15 @@ public class UserService {
             user = userRepository.save(user);
         } catch (DataIntegrityViolationException e) {
             throw new AppException(ErrorCode.USER_EXISTED);
+        }
+
+        var profileCreationRequest = profileMapper.toProfileCreationRequest(request);
+        profileCreationRequest.setUserId(user.getUserId());
+
+        try {
+            profileClient.createProfile(profileCreationRequest);
+        } catch (FeignException e) {
+            throw new AppException(ErrorCode.CANNOT_CREATE_PROFILE);
         }
 
         return userMapper.toUserResponse(user);

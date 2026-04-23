@@ -1,3 +1,19 @@
+### Registration
+POST {{gateway_url}}{{api_prefix}}/identity/users/registration
+Content-Type: application/json
+
+{
+  "username": "zayden",
+  "password": "12345678",
+  "firstName": "Tran Tin",
+  "lastName": "Vo",
+  "dob": "1993-09-02",
+  "email": "votrantin@gmail.com",
+  "city": "Ho Chi Minh"
+}
+
+###
+
 ### Login
 POST {{gateway_url}}{{api_prefix}}/identity/auth/token
 Content-Type: application/json
