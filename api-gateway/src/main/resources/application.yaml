@@ -22,3 +22,9 @@ spring:
             - Path=${app.api-prefix}/profile/**
           filters:
             - StripPrefix=1
+        - id: file_service
+          uri: ${FILE_SERVICE_URI:http://localhost:8084}
+          predicates:
+            - Path=${app.api-prefix}/file/**
+          filters:
+            - StripPrefix=1

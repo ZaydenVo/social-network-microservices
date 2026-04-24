@@ -12,9 +12,7 @@ Content-Type: application/json
   "city": "Ho Chi Minh"
 }
 
-###
-
-### Login
+### Login (Get Token)
 POST {{gateway_url}}{{api_prefix}}/identity/auth/token
 Content-Type: application/json
 
@@ -48,5 +46,22 @@ Authorization: Bearer {{auth_token}}
   "dob": "1993-09-02",
   "city": "Ho Chi Minh"
 }
+
+### Upload File
+POST {{gateway_url}}{{api_prefix}}/file/media/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+Authorization: Bearer {{auth_token}}
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="20180809_133406.jpg"
+Content-Type: image/png
+
+< E:\photo\20180809_133406.jpg
+--WebAppBoundary--
+
+### Download File
+GET {{gateway_url}}{{api_prefix}}/file/media/download/f0aac3f1-512b-470c-b239-f19ededbf318.jpg
+Accept: application/json
+Authorization: Bearer {{auth_token}}
 
 ###
