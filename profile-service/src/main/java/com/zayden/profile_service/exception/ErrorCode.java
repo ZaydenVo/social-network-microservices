@@ -11,6 +11,7 @@ public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized exception.", HttpStatus.INTERNAL_SERVER_ERROR),
     ACCESS_DENIED(1001, "You do not have permission!", HttpStatus.FORBIDDEN),
     PARSE_EXCEPTION(1002, "Parse exception.", HttpStatus.BAD_REQUEST),
+    CANNOT_UPDATE_AVATAR(1003, "Can not update avatar!", HttpStatus.INTERNAL_SERVER_ERROR),
     PROFILE_NOT_EXISTED(1004, "Profile is not existed!", HttpStatus.NOT_FOUND),
     UNAUTHENTICATED(1005, "Unauthenticated!", HttpStatus.UNAUTHORIZED),
     INVALID_KEY(1006, "Invalid message key.", HttpStatus.BAD_REQUEST),

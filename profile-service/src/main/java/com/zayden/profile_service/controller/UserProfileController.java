@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,6 +20,13 @@ public class UserProfileController {
     ApiResponse<UserProfileResponse> updateProfile(@RequestBody ProfileUpdateRequest request) {
         return ApiResponse.<UserProfileResponse>builder()
                 .result(userProfileService.updateProfile(request))
+                .build();
+    }
+
+    @PutMapping("/users/avatar")
+    ApiResponse<UserProfileResponse> updateAvatar(@RequestParam("file") MultipartFile file) {
+        return ApiResponse.<UserProfileResponse>builder()
+                .result(userProfileService.updateAvatar(file))
                 .build();
     }
 

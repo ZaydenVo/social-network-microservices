@@ -25,6 +25,8 @@ Content-Type: application/json
     client.global.set("auth_token", response.body.result.token)
  %}
 
+
+
 ### Get all Users
 GET {{gateway_url}}{{api_prefix}}/identity/users/getAll
 Accept: application/json
@@ -46,6 +48,18 @@ Authorization: Bearer {{auth_token}}
   "dob": "1993-09-02",
   "city": "Ho Chi Minh"
 }
+
+### Update Avatar
+PUT {{gateway_url}}{{api_prefix}}/profile/users/avatar
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+Authorization: Bearer {{auth_token}}
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="20180809_133406.jpg"
+Content-Type: image/png
+
+< E:\photo\20180809_133406.jpg
+--WebAppBoundary--
 
 ### Upload File
 POST {{gateway_url}}{{api_prefix}}/file/media/upload

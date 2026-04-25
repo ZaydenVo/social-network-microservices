@@ -8,11 +8,14 @@ import com.zayden.profile_service.exception.AppException;
 import com.zayden.profile_service.exception.ErrorCode;
 import com.zayden.profile_service.mapper.UserProfileMapper;
 import com.zayden.profile_service.repository.UserProfileRepository;
+import com.zayden.profile_service.repository.httpclient.FileClient;
+import feign.FeignException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Service;
 public class UserProfileService {
     UserProfileRepository userProfileRepository;
     UserProfileMapper userProfileMapper;
+    FileClient fileClient;
 
     public UserProfileResponse createProfile(ProfileCreationRequest request) {
         UserProfile userProfile = userProfileMapper.toUserProfile(request);
@@ -34,6 +38,20 @@ public class UserProfileService {
         userProfileMapper.updateProfile(user, request);
 
         return userProfileMapper.toUserProfileResponse(userProfileRepository.save(user));
+    }
+
+    public UserProfileResponse updateAvatar(MultipartFile file) {
+        var userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        var userProfile = userProfileRepository.findByUserId(userId).orElseThrow(() -> new AppException(ErrorCode.PROFILE_NOT_EXISTED));
+
+        try {
+            userProfile.setAvatar(fileClient.uploadMedia(file).getResult().getUrl());
+            userProfileRepository.save(userProfile);
+        } catch (FeignException e) {
+            throw new AppException(ErrorCode.CANNOT_UPDATE_AVATAR);
+        }
+
+        return userProfileMapper.toUserProfileResponse(userProfile);
     }
 
     public UserProfileResponse getMyInfo() {
