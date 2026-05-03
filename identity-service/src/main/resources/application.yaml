@@ -5,7 +5,7 @@ server:
 
 spring:
   datasource:
-    url: ${DB_URL:jdbc:mysql://localhost:3306/identity-service}
+    url: ${DB_URI:jdbc:mysql://localhost:3306/identity-service}
     driverClassName: "com.mysql.cj.jdbc.Driver"
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD:root}
