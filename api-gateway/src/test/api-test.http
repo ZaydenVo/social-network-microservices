@@ -49,6 +49,10 @@ Authorization: Bearer {{auth_token}}
   "city": "Ho Chi Minh"
 }
 
+### Get Profile by userId
+GET http://localhost:8081/profile/internal/users/f45aa0d4-3e63-456e-8d93-c39e91aec4ae
+Accept: application/json
+
 ### Update Avatar
 PUT {{gateway_url}}{{api_prefix}}/profile/users/avatar
 Content-Type: multipart/form-data; boundary=WebAppBoundary
@@ -77,5 +81,15 @@ Content-Type: image/png
 GET {{gateway_url}}{{api_prefix}}/file/media/download/f0aac3f1-512b-470c-b239-f19ededbf318.jpg
 Accept: application/json
 Authorization: Bearer {{auth_token}}
+
+### Create Post
+POST {{gateway_url}}{{api_prefix}}/post/create
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "title": "1st post",
+  "content": "This is the first post!"
+}
 
 ###
