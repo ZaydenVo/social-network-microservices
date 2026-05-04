@@ -2,14 +2,13 @@ package com.zayden.post_service.controller;
 
 import com.zayden.post_service.dto.ApiResponse;
 import com.zayden.post_service.dto.request.PostRequest;
+import com.zayden.post_service.dto.response.PageResponse;
 import com.zayden.post_service.dto.response.PostResponse;
 import com.zayden.post_service.service.PostService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +20,16 @@ public class PostController {
     ApiResponse<PostResponse> createPost(@RequestBody PostRequest request) {
         return ApiResponse.<PostResponse>builder()
                 .result(postService.createPost(request))
+                .build();
+    }
+
+    @GetMapping("/my-posts")
+    ApiResponse<PageResponse<PostResponse>> getMyPosts(
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "5") int size
+    ) {
+        return ApiResponse.<PageResponse<PostResponse>>builder()
+                .result(postService.getMyPosts(page, size))
                 .build();
     }
 }
