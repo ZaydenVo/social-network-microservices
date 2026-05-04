@@ -2,6 +2,7 @@ package com.zayden.post_service.controller;
 
 import com.zayden.post_service.dto.ApiResponse;
 import com.zayden.post_service.dto.request.PostRequest;
+import com.zayden.post_service.dto.request.SearchPostRequest;
 import com.zayden.post_service.dto.response.PageResponse;
 import com.zayden.post_service.dto.response.PostResponse;
 import com.zayden.post_service.service.PostService;
@@ -30,6 +31,13 @@ public class PostController {
     ) {
         return ApiResponse.<PageResponse<PostResponse>>builder()
                 .result(postService.getMyPosts(page, size))
+                .build();
+    }
+
+    @PostMapping("/search")
+    ApiResponse<PageResponse<PostResponse>> searchPost(@RequestBody SearchPostRequest request) {
+        return ApiResponse.<PageResponse<PostResponse>>builder()
+                .result(postService.searchPost(request))
                 .build();
     }
 }

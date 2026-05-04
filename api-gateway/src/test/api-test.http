@@ -95,4 +95,15 @@ GET {{gateway_url}}{{api_prefix}}/post/my-posts
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 
+### Search Posts
+POST {{gateway_url}}{{api_prefix}}/post/search
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "page": 1,
+  "size": 5,
+  "text": "post"
+}
+
 ###

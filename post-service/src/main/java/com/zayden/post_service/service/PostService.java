@@ -1,6 +1,7 @@
 package com.zayden.post_service.service;
 
 import com.zayden.post_service.dto.request.PostRequest;
+import com.zayden.post_service.dto.request.SearchPostRequest;
 import com.zayden.post_service.dto.response.PageResponse;
 import com.zayden.post_service.dto.response.PostResponse;
 import com.zayden.post_service.dto.response.UserProfileResponse;
@@ -91,5 +92,35 @@ public class PostService {
                 .totalElements(pageData.getTotalElements())
                 .data(postList)
                 .build();
+    }
+
+    public PageResponse<PostResponse> searchPost(SearchPostRequest request) {
+        Sort sort = Sort.by("createdDate").descending();
+        Pageable pageable = PageRequest.of(request.getPage() - 1, request.getSize(), sort);
+
+        var postList = postRepository.searchText(request.getText(), pageable);
+
+        var postResponseList = postList.map(this::toPostResponse).toList();
+
+        return PageResponse.<PostResponse>builder()
+                .currentPage(request.getPage())
+                .pagesSize(request.getSize())
+                .totalElements(postList.getTotalElements())
+                .data(postResponseList)
+                .build();
+    }
+
+    private PostResponse toPostResponse(Post post) {
+        var postResponse = postMapper.toPostResponse(post);
+
+        try {
+            postResponse.setUsername(profileClient.getUserProfile(post.getUserId()).getResult().getUsername());
+        } catch (FeignException e) {
+            log.error("Fail to fetch username fo userId={}!", post.getUserId(), e);
+            postResponse.setUsername("Unknow");
+        }
+
+        postResponse.setCreated(dateTimeFormatter.format(post.getCreatedDate()));
+        return postResponse;
     }
 }
