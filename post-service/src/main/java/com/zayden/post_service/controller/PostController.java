@@ -40,4 +40,11 @@ public class PostController {
                 .result(postService.searchPost(request))
                 .build();
     }
+
+    @DeleteMapping("/{postId}")
+    ApiResponse<String> deletePost(@PathVariable String postId) {
+        return ApiResponse.<String>builder()
+                .result(postService.deletePost(postId))
+                .build();
+    }
 }

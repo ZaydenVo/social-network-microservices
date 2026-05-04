@@ -110,6 +110,11 @@ public class PostService {
                 .build();
     }
 
+    public String deletePost(String postId) {
+        postRepository.deleteById(postId);
+        return "Post has been deleted!";
+    }
+
     private PostResponse toPostResponse(Post post) {
         var postResponse = postMapper.toPostResponse(post);
 
