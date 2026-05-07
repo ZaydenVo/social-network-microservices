@@ -40,3 +40,9 @@ spring:
             - Path=${app.api-prefix}/notification/**
           filters:
             - StripPrefix=1
+        - id: chat_service
+          uri: ${CHAT_SERVICE_URI:http://localhost:8085}
+          predicates:
+            - Path=${app.api-prefix}/chat/**
+          filters:
+            - StripPrefix=1
