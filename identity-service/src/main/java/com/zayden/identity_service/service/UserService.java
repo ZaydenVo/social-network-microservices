@@ -3,10 +3,12 @@ package com.zayden.identity_service.service;
 import java.util.HashSet;
 import java.util.List;
 
+import com.zayden.event.dto.NotificationEvent;
 import com.zayden.identity_service.mapper.ProfileMapper;
 import com.zayden.identity_service.repository.httpclient.ProfileClient;
 import feign.FeignException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,6 +38,7 @@ public class UserService {
     RoleRepository roleRepository;
     ProfileMapper profileMapper;
     ProfileClient profileClient;
+    KafkaTemplate<String, Object> kafkaTemplate;
 
     public UserResponse createUser(UserCreationRequest request) {
         User user = userMapper.toUser(request);
@@ -67,6 +70,15 @@ public class UserService {
         } catch (FeignException e) {
             throw new AppException(ErrorCode.CANNOT_CREATE_PROFILE);
         }
+
+        NotificationEvent notificationEvent = NotificationEvent.builder()
+                .channel("EMAIL")
+                .recipient(request.getEmail())
+                .subject("Welcome!")
+                .body("Welcome to My Project!")
+                .build();
+
+        kafkaTemplate.send("notification-delivery", notificationEvent);
 
         return userMapper.toUserResponse(user);
     }
