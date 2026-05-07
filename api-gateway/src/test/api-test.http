@@ -109,3 +109,18 @@ Authorization: Bearer {{auth_token}}
 ### Delete Post
 DELETE {{gateway_url}}{{api_prefix}}/post/69f740dbf870e53850508ae8
 Authorization: Bearer {{auth_token}}
+
+### Send Email
+POST {{gateway_url}}{{api_prefix}}/notification/email/send
+Content-Type: application/json
+
+{
+  "to": {
+    "email": "zaydenz@yopmail.com",
+    "name": "Zayden"
+  },
+  "htmlContent": "<p>Hello Vo Tran Tin!</p>",
+  "subject": "Welcome Zayden"
+}
+
+###
