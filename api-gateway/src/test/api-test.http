@@ -3,12 +3,12 @@ POST {{gateway_url}}{{api_prefix}}/identity/users/registration
 Content-Type: application/json
 
 {
-  "username": "zayden",
+  "username": "zayden1",
   "password": "12345678",
   "firstName": "Tran Tin",
   "lastName": "Vo",
   "dob": "1993-09-02",
-  "email": "zayden@yopmail.com",
+  "email": "zayden1@yopmail.com",
   "city": "Ho Chi Minh"
 }
 
@@ -121,6 +121,18 @@ Content-Type: application/json
   },
   "htmlContent": "<p>Hello Vo Tran Tin!</p>",
   "subject": "Welcome Zayden"
+}
+
+### Create Conversation
+POST {{gateway_url}}{{api_prefix}}/chat/conversations/create
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "type": "",
+  "participantIds": [
+    "ec8541ce-3a1a-4c70-9abd-e78a321ddfa7"
+  ]
 }
 
 ###
