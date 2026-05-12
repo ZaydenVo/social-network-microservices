@@ -67,6 +67,25 @@ public class ConversationService {
         return toConversationResponse(conversation);
     }
 
+    public List<ConversationResponse> getMyConversations() {
+        var userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        var conversationLists = conversationRepository.findAllByParticipantIdsContains(userId);
+
+        return conversationLists.stream().map(this::toConversationResponse).toList();
+    }
+
+    public String deleteConversation(String conversationId) {
+        var userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        var conversation = conversationRepository.findById(conversationId).orElseThrow(() -> new AppException(ErrorCode.CONVERSATION_NOT_FOUND));
+
+        if (conversation.getParticipants().stream().noneMatch(participantInfo -> participantInfo.getUserId().equals(userId)))
+            throw new AppException(ErrorCode.UNAUTHORIZED);
+
+        conversationRepository.delete(conversation);
+
+        return "Conversation has been deleted!";
+    }
+
     private String generateParticipantsHash(List<String> ids) {
         StringJoiner stringJoiner = new StringJoiner("_");
         ids.forEach(stringJoiner::add);

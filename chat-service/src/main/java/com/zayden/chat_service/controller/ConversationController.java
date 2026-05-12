@@ -7,10 +7,9 @@ import com.zayden.chat_service.service.ConversationService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,6 +22,20 @@ public class ConversationController {
     ApiResponse<ConversationResponse> createConversation(@RequestBody ConversationRequest request) {
         return ApiResponse.<ConversationResponse>builder()
                 .result(conversationService.createConversation(request))
+                .build();
+    }
+
+    @GetMapping("/my-conversations")
+    ApiResponse<List<ConversationResponse>> getMyConversations() {
+        return ApiResponse.<List<ConversationResponse>>builder()
+                .result(conversationService.getMyConversations())
+                .build();
+    }
+
+    @DeleteMapping("/delete/{conversationId}")
+    ApiResponse<String> deleteConversation(@PathVariable String conversationId) {
+        return ApiResponse.<String>builder()
+                .result(conversationService.deleteConversation(conversationId))
                 .build();
     }
 }

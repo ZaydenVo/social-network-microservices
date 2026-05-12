@@ -3,12 +3,12 @@ POST {{gateway_url}}{{api_prefix}}/identity/users/registration
 Content-Type: application/json
 
 {
-  "username": "zayden1",
+  "username": "zayden2",
   "password": "12345678",
   "firstName": "Tran Tin",
   "lastName": "Vo",
   "dob": "1993-09-02",
-  "email": "zayden1@yopmail.com",
+  "email": "zayden2@yopmail.com",
   "city": "Ho Chi Minh"
 }
 
@@ -135,4 +135,11 @@ Authorization: Bearer {{auth_token}}
   ]
 }
 
-###
+### Get My Conversation
+GET {{gateway_url}}{{api_prefix}}/chat/conversations/my-conversations
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+### Delete Conversation
+DELETE {{gateway_url}}{{api_prefix}}/chat/conversations/delete/6a02791e5e2b31baa1caf1f0
+Authorization: Bearer {{auth_token}}

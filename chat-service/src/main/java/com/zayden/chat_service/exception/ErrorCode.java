@@ -11,9 +11,11 @@ public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized exception.", HttpStatus.INTERNAL_SERVER_ERROR),
     ACCESS_DENIED(1001, "You do not have permission!", HttpStatus.FORBIDDEN),
     PARSE_EXCEPTION(1002, "Parse exception.", HttpStatus.BAD_REQUEST),
+    CONVERSATION_NOT_FOUND(1003, "Conversation is not found!", HttpStatus.NOT_FOUND),
     PROFILE_NOT_FOUND(1004, "Profile is not found!", HttpStatus.NOT_FOUND),
     UNAUTHENTICATED(1005, "Unauthenticated!", HttpStatus.UNAUTHORIZED),
     INVALID_KEY(1006, "Invalid message key.", HttpStatus.BAD_REQUEST),
+    UNAUTHORIZED(1007, "You don't have permission!", HttpStatus.UNAUTHORIZED),
     ;
     int code;
     String message;
