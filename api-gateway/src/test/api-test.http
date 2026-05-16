@@ -17,7 +17,7 @@ POST {{gateway_url}}{{api_prefix}}/identity/auth/token
 Content-Type: application/json
 
 {
-  "username": "zayden",
+  "username": "zayden1",
   "password": "12345678"
 }
 
@@ -142,4 +142,19 @@ Authorization: Bearer {{auth_token}}
 
 ### Delete Conversation
 DELETE {{gateway_url}}{{api_prefix}}/chat/conversations/delete/6a02791e5e2b31baa1caf1f0
+Authorization: Bearer {{auth_token}}
+
+### Create Chat Message
+POST {{gateway_url}}{{api_prefix}}/chat/message/create
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "conversationId": "6a07c633085233a40eefab93",
+  "message": "Hello!!!"
+}
+
+### Get Chat Message
+GET {{gateway_url}}{{api_prefix}}/chat/message/6a07c633085233a40eefab93
+Accept: application/json
 Authorization: Bearer {{auth_token}}
