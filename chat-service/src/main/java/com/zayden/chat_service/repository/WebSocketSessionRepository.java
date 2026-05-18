@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WebSocketSessionRepository extends MongoRepository<WebSocketSession, String> {
+    void deleteBySocketSessionId(String socketId);
 }

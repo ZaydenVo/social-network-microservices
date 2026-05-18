@@ -17,7 +17,7 @@ POST {{gateway_url}}{{api_prefix}}/identity/auth/token
 Content-Type: application/json
 
 {
-  "username": "zayden1",
+  "username": "zayden",
   "password": "12345678"
 }
 
