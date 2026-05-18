@@ -1,14 +1,16 @@
 package com.zayden.profile_service.controller;
 
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.zayden.profile_service.dto.ApiResponse;
 import com.zayden.profile_service.dto.request.ProfileUpdateRequest;
 import com.zayden.profile_service.dto.response.UserProfileResponse;
 import com.zayden.profile_service.service.UserProfileService;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor

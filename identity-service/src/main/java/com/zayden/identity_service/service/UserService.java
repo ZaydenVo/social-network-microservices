@@ -3,10 +3,6 @@ package com.zayden.identity_service.service;
 import java.util.HashSet;
 import java.util.List;
 
-import com.zayden.event.dto.NotificationEvent;
-import com.zayden.identity_service.mapper.ProfileMapper;
-import com.zayden.identity_service.repository.httpclient.ProfileClient;
-import feign.FeignException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -14,16 +10,20 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.zayden.event.dto.NotificationEvent;
 import com.zayden.identity_service.dto.request.UserCreationRequest;
 import com.zayden.identity_service.dto.response.UserResponse;
 import com.zayden.identity_service.entity.Role;
 import com.zayden.identity_service.entity.User;
 import com.zayden.identity_service.exception.AppException;
 import com.zayden.identity_service.exception.ErrorCode;
+import com.zayden.identity_service.mapper.ProfileMapper;
 import com.zayden.identity_service.mapper.UserMapper;
 import com.zayden.identity_service.repository.RoleRepository;
 import com.zayden.identity_service.repository.UserRepository;
+import com.zayden.identity_service.repository.httpclient.ProfileClient;
 
+import feign.FeignException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

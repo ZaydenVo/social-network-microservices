@@ -1,8 +1,9 @@
 package com.zayden.post_service.mapper;
 
+import org.mapstruct.Mapper;
+
 import com.zayden.post_service.dto.response.PostResponse;
 import com.zayden.post_service.entity.Post;
-import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface PostMapper {

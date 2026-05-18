@@ -1,5 +1,13 @@
 package com.zayden.post_service.service;
 
+import java.time.Instant;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+
 import com.zayden.post_service.dto.request.PostRequest;
 import com.zayden.post_service.dto.request.SearchPostRequest;
 import com.zayden.post_service.dto.response.PageResponse;
@@ -9,18 +17,12 @@ import com.zayden.post_service.entity.Post;
 import com.zayden.post_service.mapper.PostMapper;
 import com.zayden.post_service.repository.PostRepository;
 import com.zayden.post_service.repository.httpclient.ProfileClient;
+
 import feign.FeignException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-
-import java.time.Instant;
 
 @Service
 @RequiredArgsConstructor
@@ -78,12 +80,14 @@ public class PostService {
 
         var pageData = postRepository.findAllByUserId(userId, pageable);
 
-        var postList = pageData.stream().map(post -> {
-            var postResponse = postMapper.toPostResponse(post);
-            postResponse.setUsername(username);
-            postResponse.setCreated(dateTimeFormatter.format(post.getCreatedDate()));
-            return postResponse;
-        }).toList();
+        var postList = pageData.stream()
+                .map(post -> {
+                    var postResponse = postMapper.toPostResponse(post);
+                    postResponse.setUsername(username);
+                    postResponse.setCreated(dateTimeFormatter.format(post.getCreatedDate()));
+                    return postResponse;
+                })
+                .toList();
 
         return PageResponse.<PostResponse>builder()
                 .currentPage(page)
@@ -119,7 +123,8 @@ public class PostService {
         var postResponse = postMapper.toPostResponse(post);
 
         try {
-            postResponse.setUsername(profileClient.getUserProfile(post.getUserId()).getResult().getUsername());
+            postResponse.setUsername(
+                    profileClient.getUserProfile(post.getUserId()).getResult().getUsername());
         } catch (FeignException e) {
             log.error("Fail to fetch username fo userId={}!", post.getUserId(), e);
             postResponse.setUsername("Unknow");

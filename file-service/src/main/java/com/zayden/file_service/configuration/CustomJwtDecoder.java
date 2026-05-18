@@ -1,8 +1,9 @@
 package com.zayden.file_service.configuration;
 
+import javax.crypto.spec.SecretKeySpec;
+
 import jakarta.annotation.PostConstruct;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -11,7 +12,8 @@ import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.spec.SecretKeySpec;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)

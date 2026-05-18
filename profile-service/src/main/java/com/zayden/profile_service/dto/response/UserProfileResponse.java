@@ -1,10 +1,9 @@
 package com.zayden.profile_service.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import java.time.LocalDate;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
 
 @Data
 @Builder
